@@ -1,0 +1,68 @@
+# List untuk menyimpan semua data mahasiswa
+data_mahasiswa = []
+
+def hitung_nilai_akhir(tugas, uts, uas):
+    """Menghitung nilai akhir dengan bobot 30%, 35%, 35%."""
+    # Nilai Akhir diambil dari perhitungan 3 komponen nilai (tugas: 30%, uts: 35%, uas: 35%) 
+    nilai_akhir = (tugas * 0.30) + (uts * 0.35) + (uas * 0.35)
+    return nilai_akhir
+
+def tambah_data():
+    """Meminta input data mahasiswa dan menyimpannya ke dalam list."""
+    print("\nMasukkan Data Mahasiswa:")
+    nama = input("Nama: ") # Contoh: Ari [cite: 44]
+    nim = input("NIM: ") # Contoh: 1234 [cite: 45]
+    
+    # Input nilai dan konversi ke float
+    try:
+        nilai_tugas = float(input("Nilai Tugas: ")) # Contoh: 70 [cite: 46]
+        nilai_uts = float(input("Nilai UTS: ")) # Contoh: 65 [cite: 47]
+        nilai_uas = float(input("Nilai UAS: ")) # Contoh: 80 [cite: 48]
+    except ValueError:
+        print("Input nilai tidak valid. Data tidak ditambahkan.")
+        return
+
+    # Hitung Nilai Akhir
+    nilai_akhir = hitung_nilai_akhir(nilai_tugas, nilai_uts, nilai_uas)
+
+    # Buat dictionary data mahasiswa
+    data_mahasiswa.append({
+        "Nama": nama,
+        "NIM": nim,
+        "Tugas": nilai_tugas,
+        "UTS": nilai_uts,
+        "UAS": nilai_uas,
+        "Akhir": nilai_akhir
+    })
+
+def tampilkan_data():
+    """Menampilkan daftar data dalam bentuk tabel."""
+    if not data_mahasiswa:
+        print("\nTidak ada data mahasiswa.")
+        return
+
+    # Header Tabel [cite: 54]
+    print("\n" + "="*60)
+    print(f"| {'No':<3} | {'NIM':<6} | {'Nama':<15} | {'Tugas':<5} | {'UTS':<5} | {'UAS':<5} | {'Akhir':<6} |")
+    print("="*60)
+
+    # Isi Tabel
+    for i, data in enumerate(data_mahasiswa):
+        print(f"| {i+1:<3} | {data['NIM']:<6} | {data['Nama']:<15} | {data['Tugas']:<5.0f} | {data['UTS']:<5.0f} | {data['UAS']:<5.0f} | {data['Akhir']:<6.2f} |")
+        
+    print("="*60)
+
+# --- PROGRAM UTAMA ---
+
+while True: # Progam meminta memasukkan data sebanyak-banyaknya (gunakan perulangan) 
+    tambah_data()
+    
+    # Tampilkan pertanyaan untuk menambah data (y/t?) 
+    lanjut = input("\nTambah data (y/t)? ").lower() # Contoh: y [cite: 49], t [cite: 53]
+    
+    if lanjut == 't': # apabila jawaban t (Tidak), maka program akan menampilkan daftar datanya. 
+        break
+
+tampilkan_data()
+
+print("\nProgram selesai.")
